@@ -1,4 +1,4 @@
-package com.sakila.analytics.model.entity;
+package com.sakila.sakila.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

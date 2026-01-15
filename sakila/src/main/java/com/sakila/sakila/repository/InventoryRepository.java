@@ -1,6 +1,6 @@
-package com.sakila.analytics.repository;
+package com.sakila.sakila.repository;
 
-import com.sakila.analytics.model.entity.Inventory;
+import com.sakila.sakila.model.entity.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

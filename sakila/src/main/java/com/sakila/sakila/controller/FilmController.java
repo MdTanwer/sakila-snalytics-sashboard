@@ -1,7 +1,7 @@
-package com.sakila.analytics.controller;
+package com.sakila.sakila.controller;
 
-import com.sakila.analytics.model.entity.Film;
-import com.sakila.analytics.repository.FilmRepository;
+import com.sakila.sakila.model.entity.Film;
+import com.sakila.sakila.repository.FilmRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
