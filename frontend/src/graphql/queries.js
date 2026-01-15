@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client/index.js';
 
-export const GET_KEY_METRICS = gql`
-  query GetKeyMetrics($storeId: Int, $startDate: String, $endDate: String) {
-    getKeyMetrics(storeId: $storeId, startDate: $startDate, endDate: $endDate) {
+export const GET_STORE_METRICS = gql`
+  query GetStoreMetrics($storeId: Int, $startDate: String, $endDate: String) {
+    getStoreMetrics(storeId: $storeId, dateFrom: $startDate, dateTo: $endDate) {
       totalRevenue
       activeRentals
     }

@@ -1,26 +1,30 @@
 import { useQuery } from '@apollo/client/react';
 import { useFilters } from '../context/FilterContext';
-import { MOCK_MODE, mockQueries } from '../graphql/mockData';
 
 export const useFilteredQuery = (query, mockDataKey) => {
   const { filters } = useFilters();
   
+  // Only include non-null parameters to avoid backend date filtering issues
+  const variables = {};
+  if (filters.storeId !== null) {
+    variables.storeId = filters.storeId;
+  }
+  // Temporarily exclude date parameters due to backend issues
+  // if (filters.startDate) {
+  //   variables.startDate = filters.startDate;
+  // }
+  // if (filters.endDate) {
+  //   variables.endDate = filters.endDate;
+  // }
+  
   const { loading, error, data, refetch } = useQuery(query, {
-    variables: {
-      storeId: filters.storeId,
-      startDate: filters.startDate,
-      endDate: filters.endDate,
-      limit: 10, // Default limit for queries that need it
-    },
-    skip: MOCK_MODE,
+    variables,
   });
 
-  const displayData = MOCK_MODE ? mockQueries[mockDataKey] : data;
-
   return {
-    loading: MOCK_MODE ? false : loading,
-    error: MOCK_MODE ? null : error,
-    data: displayData,
+    loading,
+    error,
+    data,
     refetch,
   };
 };

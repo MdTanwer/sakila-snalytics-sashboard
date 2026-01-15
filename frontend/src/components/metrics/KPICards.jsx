@@ -1,14 +1,16 @@
 import React from 'react';
 import { DollarSign, Package } from 'lucide-react';
 import { useFilteredQuery } from '../../hooks/useFilteredQuery';
-import { GET_KEY_METRICS } from '../../graphql/queries';
+import { GET_STORE_METRICS } from '../../graphql/queries';
 import { formatCurrency } from '../../utils/formatters';
-import { COLORS } from '../../utils/constants';
 
 const KPICards = () => {
-  const { loading, error, data, refetch } = useFilteredQuery(GET_KEY_METRICS, 'getKeyMetrics');
+  const { loading, error, data, refetch } = useFilteredQuery(GET_STORE_METRICS, 'getKeyMetrics');
 
-  const metrics = data || { totalRevenue: 0, activeRentals: 0 };
+  const metrics = data?.getStoreMetrics || { totalRevenue: 0, activeRentals: 0 };
+  console.log('data', data);
+  
+  console.log('metrics', metrics);
 
   if (error) {
     return (

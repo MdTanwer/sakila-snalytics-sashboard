@@ -7,7 +7,15 @@ type Query {
     """Get a film by ID"""
     filmById(id: ID!): Film
     
-    # Analytics queries
+    # Store metrics query
+    """Get store metrics: total revenue and active rentals"""
+    getStoreMetrics(
+        storeId: Int
+        dateFrom: String  # Format: YYYY-MM-DD
+        dateTo: String    # Format: YYYY-MM-DD
+    ): StoreMetrics!
+    
+    # Analytics queries (legacy - not implemented)
     """Get top 5 most rented films, optionally filtered by store and date range"""
     getTopRentedFilms(
         storeId: Int
@@ -54,7 +62,7 @@ type Query {
 # DTOs (Data Transfer Objects)
 
 type Film {
-    id: ID!
+    filmId: ID!
     title: String!
     description: String
     releaseYear: Int
@@ -91,6 +99,14 @@ type CustomerStats {
 type Metrics {
     totalRevenue: Float!
     activeRentals: Int!
+}
+
+type StoreMetrics {
+    totalRevenue: Float!
+    activeRentals: Int!
+    storeId: Int
+    dateFrom: String
+    dateTo: String
 }
 
 type Transaction {

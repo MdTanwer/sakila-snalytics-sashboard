@@ -23,16 +23,16 @@ function App() {
           <KPICards />
 
           {/* Top Rented Films Chart - Full width */}
-          <TopRentedFilmsChart />
+          {/* <TopRentedFilmsChart /> */}
 
           {/* Revenue Distribution and Top Customers - Side by side on desktop */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <RevenueDistributionChart />
-            <TopCustomersTable />
+            {/* <RevenueDistributionChart /> */}
+            {/* <TopCustomersTable /> */}
           </div>
 
           {/* Recent Transactions Feed - Full width */}
-          <RecentTransactionsFeed />
+          {/* <RecentTransactionsFeed /> */}
         </DashboardLayout>
       </FilterProvider>
     </ApolloProvider>
