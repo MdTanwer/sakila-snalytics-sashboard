@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.Year;
 import java.util.Set;
-import com.sakila.analytics.model.converter.YearAttributeConverter;
 
 @Entity
 @Table(name = "film")
@@ -18,7 +17,7 @@ public class Film {
     
     @Id
     @Column(name = "film_id")
-    private Integer filmId;
+    private Long filmId;
     
     @Column(name = "title", nullable = false, length = 255)
     private String title;
@@ -26,8 +25,7 @@ public class Film {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
     
-    @Column(name = "release_year", columnDefinition = "SMALLINT")
-    @Convert(converter = YearAttributeConverter.class)
+    @Column(name = "release_year")
     private Year releaseYear;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,14 +36,14 @@ public class Film {
     @JoinColumn(name = "original_language_id")
     private Language originalLanguage;
     
-    @Column(name = "rental_duration", nullable = false, columnDefinition = "SMALLINT")
-    private Short rentalDuration;
+    @Column(name = "rental_duration", nullable = false)
+    private Integer rentalDuration;
     
     @Column(name = "rental_rate", nullable = false, precision = 4, scale = 2)
     private java.math.BigDecimal rentalRate;
     
-    @Column(name = "length", columnDefinition = "SMALLINT")
-    private Short length;
+    @Column(name = "length")
+    private Integer length;
     
     @Column(name = "replacement_cost", nullable = false, precision = 5, scale = 2)
     private java.math.BigDecimal replacementCost;

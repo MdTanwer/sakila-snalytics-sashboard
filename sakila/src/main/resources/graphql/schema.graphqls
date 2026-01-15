@@ -51,30 +51,23 @@ type Query {
     ): [Transaction!]!
 }
 
-# Types
+# DTOs (Data Transfer Objects)
 
 type Film {
     id: ID!
     title: String!
     description: String
     releaseYear: Int
-    language: Language
-    originalLanguage: Language
+    languageId: Int!
     rentalDuration: Int
     rentalRate: Float
     length: Int
     replacementCost: Float
     rating: String
-    specialFeatures: String
-    lastUpdate: String
+    lastUpdate: String!
+    specialFeatures: [String]
+    fulltext: String
 }
-
-type Language {
-    id: ID!
-    name: String!
-}
-
-# DTOs (Data Transfer Objects)
 
 type FilmRental {
     filmId: Int!
