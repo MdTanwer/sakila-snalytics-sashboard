@@ -22,9 +22,6 @@ spring:
       enabled: true  # GraphQL Playground at /graphiql
       path: /graphiql
     path: /graphql
-    cors:
-      allowed-origins: "http://localhost:3000"
-      allowed-methods: "*"
 
 server:
   port: 8080

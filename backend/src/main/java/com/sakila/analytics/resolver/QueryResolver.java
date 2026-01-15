@@ -24,10 +24,15 @@ public class QueryResolver {
      * Output: LocalDateTime at start of day (00:00:00)
      */
     private LocalDateTime parseDate(String dateStr) {
-        if (dateStr == null || dateStr.isBlank()) {
+        if (dateStr == null || dateStr.trim().isEmpty()) {
             return null;
         }
-        return LocalDateTime.parse(dateStr + "T00:00:00");
+        try {
+            return LocalDateTime.parse(dateStr + "T00:00:00");
+        } catch (Exception e) {
+            log.error("Failed to parse date: {}", dateStr, e);
+            return null;
+        }
     }
     
     @QueryMapping

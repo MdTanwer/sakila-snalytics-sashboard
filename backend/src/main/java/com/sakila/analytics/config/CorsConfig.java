@@ -13,9 +13,9 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/graphql")
-                        .allowedOrigins("http://localhost:3000", "http://localhost:5173")  // React dev servers
-                        .allowedMethods("GET", "POST", "OPTIONS")
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000", "http://localhost:5173", "http://localhost:8080", "http://localhost:8081")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
