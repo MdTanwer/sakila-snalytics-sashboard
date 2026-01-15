@@ -35,7 +35,7 @@ public class Customer {
     private Integer addressId;
     
     @Column(name = "active", nullable = false)
-    private Boolean active;
+    private Integer active;
     
     @Column(name = "create_date", nullable = false)
     private LocalDateTime createDate;
