@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useFilters } from '../../context/FilterContext';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -8,16 +8,25 @@ const GlobalFilter = () => {
   const [localStartDate, setLocalStartDate] = useState(new Date(filters.startDate));
   const [localEndDate, setLocalEndDate] = useState(new Date(filters.endDate));
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDateRange(
-        localStartDate.toISOString().split('T')[0],
-        localEndDate.toISOString().split('T')[0]
-      );
-    }, 500);
+  const handleApply = () => {
+    setDateRange(
+      localStartDate.toISOString().split('T')[0],
+      localEndDate.toISOString().split('T')[0]
+    );
+  };
 
-    return () => clearTimeout(timeoutId);
-  }, [localStartDate, localEndDate, setDateRange]);
+  const handleReset = () => {
+    const today = new Date();
+    const thirtyDaysAgo = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+    
+    setLocalStartDate(thirtyDaysAgo);
+    setLocalEndDate(today);
+    setStoreId(null);
+    setDateRange(
+      thirtyDaysAgo.toISOString().split('T')[0],
+      today.toISOString().split('T')[0]
+    );
+  };
 
   const handleStoreChange = (e) => {
     const value = e.target.value === 'null' ? null : parseInt(e.target.value);
@@ -25,35 +34,38 @@ const GlobalFilter = () => {
   };
 
   return (
-    <div className="sticky top-0 z-10 bg-gray-50 border-b border-gray-200 px-4 py-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-          {/* Store Filter */}
-          <div className="flex-1 min-w-0">
-            <label htmlFor="store-filter" className="block text-sm font-medium text-gray-700 mb-1">
-              Store
-            </label>
-            <select
-              id="store-filter"
-              value={filters.storeId === null ? 'null' : filters.storeId}
-              onChange={handleStoreChange}
-              className="w-full sm:w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              {STORE_OPTIONS.map(option => (
-                <option key={option.value} value={option.value === null ? 'null' : option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+    <div className="px-4 sm:px-6 lg:px-8 py-6">
+      <div className="mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          {/* Left: Dashboard Overview Title */}
+          <div className="flex items-center">
+            <h2 className="text-xl font-medium text-gray-600">
+              Dashboard Overview
+            </h2>
           </div>
 
-          {/* Date Range Picker */}
-          <div className="flex-1 min-w-0">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Date Range
-            </label>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <div className="flex-1">
+          {/* Right: Filter Controls */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Store Dropdown */}
+            <div className="min-w-0">
+              <select
+                value={filters.storeId === null ? 'null' : filters.storeId}
+                onChange={handleStoreChange}
+                className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm"
+              >
+                {STORE_OPTIONS.map(option => (
+                  <option key={option.value} value={option.value === null ? 'null' : option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Date Range */}
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500">Date Range</span>
+                <span className="text-xs text-gray-500">From</span>
                 <DatePicker
                   selected={localStartDate}
                   onChange={(date) => setLocalStartDate(date)}
@@ -61,10 +73,9 @@ const GlobalFilter = () => {
                   startDate={localStartDate}
                   endDate={localEndDate}
                   placeholderText="Start Date"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm w-32"
                 />
-              </div>
-              <div className="flex-1">
+                <span className="text-xs text-gray-500">To</span>
                 <DatePicker
                   selected={localEndDate}
                   onChange={(date) => setLocalEndDate(date)}
@@ -73,10 +84,26 @@ const GlobalFilter = () => {
                   endDate={localEndDate}
                   minDate={localStartDate}
                   placeholderText="End Date"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm w-32"
                 />
               </div>
             </div>
+
+            {/* Apply Button */}
+            <button
+              onClick={handleApply}
+              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+            >
+              Apply
+            </button>
+
+            {/* Reset Button */}
+            <button
+              onClick={handleReset}
+              className="px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+            >
+              Reset
+            </button>
           </div>
         </div>
       </div>

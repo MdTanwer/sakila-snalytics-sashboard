@@ -17,6 +17,7 @@ function App() {
         <DashboardLayout>
           {/* Global Filter - Sticky Header */}
           <GlobalFilter />
+          <br />
 
           {/* KPI Cards - Row with 2 columns */}
           <KPICards />
